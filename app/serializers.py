@@ -1,19 +1,24 @@
 import json
 import xml.etree.ElementTree as ElTree
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from app.book import Book
+
 
 class Serializer:
-    def serialize(self, book) -> None:
+    def serialize(self, book: "Book") -> None:
         raise NotImplementedError
 
 
 class JsonSerializer(Serializer):
-    def serialize(self, book) -> str:
+    def serialize(self, book: "Book") -> str:
         return json.dumps({"title": book.title, "content": book.content})
 
 
 class XmlSerializer(Serializer):
-    def serialize(self, book) -> str:
+    def serialize(self, book: "Book") -> str:
         root = ElTree.Element("book")
         title = ElTree.SubElement(root, "title")
         title.text = book.title
